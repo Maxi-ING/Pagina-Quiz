@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f0e8">
+  <title>Una invitación para ti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="topbar"><span class="brand">✦ UNA INVITACIÓN</span><span id="progressLabel" class="progress-label">Un momento para ti</span></header>
+    <div class="progress" aria-hidden="true"><div id="progressFill"></div></div>
+
+    <section id="loginView" class="view active" aria-labelledby="loginTitle">
+      <div class="hero-symbol" aria-hidden="true">✿</div>
+      <p class="eyebrow">UNA PEQUEÑA SORPRESA</p>
+      <h1 id="loginTitle">Hay planes que empiezan con una pregunta.</h1>
+      <p class="intro">Preparé este espacio especialmente para ti. Entra y descubre lo que tengo en mente.</p>
+      <form id="loginForm" class="form-card">
+        <label for="guestName">Tu nombre</label><input id="guestName" name="name" autocomplete="given-name" required maxlength="60" placeholder="¿Cómo te llamas?">
+        <label for="guestCode">Código de acceso</label><input id="guestCode" name="code" type="password" autocomplete="off" required maxlength="100" placeholder="Nuestro pequeño secreto">
+        <button class="primary" type="submit">Abrir la invitación <span aria-hidden="true">↗</span></button>
+        <p id="loginError" class="feedback" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="welcomeView" class="view" aria-labelledby="welcomeTitle">
+      <p class="eyebrow">QUÉ BUENO VERTE AQUÍ</p><h1 id="welcomeTitle">Hola, <span id="welcomeName"></span>.</h1>
+      <p class="intro">Quisiera invitarte a compartir un momento bonito. Primero, cuéntame qué te gustaría; después hay un par de juegos si te apetece.</p>
+      <div class="note"><span aria-hidden="true">✦</span><p>No hay respuestas correctas. Elige lo que te haga sentir más cómoda.</p></div>
+      <button id="startButton" class="primary">Empezar <span aria-hidden="true">→</span></button>
+    </section>
+
+    <section id="quizView" class="view" aria-labelledby="quizTitle">
+      <p class="eyebrow">01 / TUS PREFERENCIAS</p><h1 id="quizTitle">Imaginemos un plan a tu manera.</h1><p class="intro">Puedes elegir una opción o escribir algo diferente.</p>
+      <form id="quizForm">
+        <fieldset><legend>¿Qué se te antoja comer?</legend><div class="choices" data-field="food">
+          <label><input type="radio" name="food" value="Pizza"><span>🍕 Pizza</span></label><label><input type="radio" name="food" value="Sushi"><span>🍣 Sushi</span></label><label><input type="radio" name="food" value="Postre y café"><span>☕ Postre y café</span></label><label><input type="radio" name="food" value="Sorpresa"><span>✦ Sorpréndeme</span></label>
+        </div><input name="foodOther" maxlength="100" placeholder="Otra idea de comida (opcional)"></fieldset>
+        <fieldset><legend>¿Qué lugar te gustaría?</legend><div class="choices">
+          <label><input type="radio" name="place" value="Un café tranquilo"><span>☕ Un café tranquilo</span></label><label><input type="radio" name="place" value="Un parque"><span>🌿 Un parque</span></label><label><input type="radio" name="place" value="Un restaurante"><span>🍽️ Un restaurante</span></label><label><input type="radio" name="place" value="Una actividad divertida"><span>🎨 Algo divertido</span></label>
+        </div><input name="placeOther" maxlength="100" placeholder="Otro lugar (opcional)"></fieldset>
+        <fieldset><legend>¿Qué momento te viene mejor?</legend><div class="choices">
+          <label><input type="radio" name="time" value="Por la mañana"><span>☀️ Mañana</span></label><label><input type="radio" name="time" value="Por la tarde"><span>🌤️ Tarde</span></label><label><input type="radio" name="time" value="Por la noche"><span>🌙 Noche</span></label>
+        </div><label class="sub-label" for="dateIdea">Fecha tentativa (opcional)</label><input type="date" name="date" id="dateIdea"></fieldset>
+        <label class="sub-label" for="extraMessage">¿Algo más que debería saber?</label><textarea name="note" id="extraMessage" maxlength="500" rows="3" placeholder="Algún gusto, límite o idea que quieras contarme..."></textarea>
+        <button class="primary" type="submit">Continuar <span aria-hidden="true">→</span></button><p id="quizError" class="feedback" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="gamesView" class="view" aria-labelledby="gamesTitle">
+      <p class="eyebrow">02 / UNA PAUSA PARA JUGAR</p><h1 id="gamesTitle">Un poquito de diversión, si quieres.</h1>
+      <p class="intro">Hay dos juegos cortitos. Puedes probarlos o ir directo a la invitación.</p>
+      <div class="games-grid"><article class="game-card"><span class="game-icon">✿</span><h2>Encuentra las parejas</h2><p>Destapa seis cartas y une los tres pares.</p><button id="memoryButton" class="secondary">Jugar</button></article>
+      <article class="game-card"><span class="game-icon">✧</span><h2>Elige una sorpresa</h2><p>Escoge una tarjeta y descubre una idea para nuestra cita.</p><button id="surpriseButton" class="secondary">Descubrir</button></article></div>
+      <div id="gameArea" class="game-area" hidden></div>
+      <button id="skipGamesButton" class="text-button">Ir a la invitación <span aria-hidden="true">→</span></button>
+    </section>
+
+    <section id="finalView" class="view" aria-labelledby="finalTitle">
+      <p class="eyebrow">03 / LA PREGUNTA IMPORTANTE</p><div class="hero-symbol" aria-hidden="true">♡</div><h1 id="finalTitle">¿Te gustaría salir conmigo?</h1>
+      <p class="intro">Me encantaría pasar un rato contigo y conocernos un poquito más. Tú eliges el ritmo y el plan.</p>
+      <div id="answerSummary" class="summary"></div>
+      <fieldset class="decision"><legend>Tu respuesta</legend><div class="choices">
+        <label><input type="radio" name="decision" value="Sí, me gustaría"><span>💗 Sí, me gustaría</span></label>
+        <label><input type="radio" name="decision" value="Prefiero hablarlo primero"><span>💬 Prefiero hablarlo primero</span></label>
+        <label><input type="radio" name="decision" value="No por ahora"><span>🌷 No por ahora</span></label>
+      </div></fieldset>
+      <label class="sub-label" for="finalMessage">Un mensaje para mí (opcional)</label><textarea id="finalMessage" maxlength="1000" rows="3" placeholder="Lo que quieras decirme..."></textarea>
+      <button id="sendButton" class="primary">Enviar mi respuesta <span aria-hidden="true">↗</span></button><p id="sendError" class="feedback" role="alert"></p>
+      <p class="fine-print">Al enviar, tus respuestas se enviarán por correo a quien preparó esta invitación.</p>
+    </section>
+
+    <section id="thanksView" class="view" aria-labelledby="thanksTitle"><div class="hero-symbol" aria-hidden="true">✿</div><p class="eyebrow">MENSAJE ENVIADO</p><h1 id="thanksTitle">Gracias por responder.</h1><p class="intro">Tu respuesta llegó correctamente. Gracias por regalarme un momento de tu tiempo.</p></section>
+    <footer>Hecho con cariño <span aria-hidden="true">✦</span></footer>
+  </main>
+</body>
+</html>
