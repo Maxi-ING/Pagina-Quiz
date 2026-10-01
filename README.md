@@ -1,13 +1,13 @@
 # Una invitación para ti
 
-Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código. Al entrar se puede elegir el quiz de la cita o una sección independiente de cuatro juegos. El quiz lleva a la propuesta final que se acepta con un botón. Preparada para Vercel; las funciones `api/login.js` y `api/submit.js` validan el acceso y envían el resumen con Resend.
+Página personal en HTML, CSS y JavaScript. La portada ofrece el quiz de la cita, protegido con nombre y código, y una sección independiente de cuatro juegos que se puede usar sin iniciar sesión. El quiz lleva a la propuesta final que se acepta con un botón. Preparada para Vercel; las funciones `api/login.js` y `api/submit.js` validan el acceso y envían el resumen con Resend.
 
 ## Personalización
 
 - Ajusta los textos y las opciones en `public/index.html`.
 - Ajusta las ideas del juego de sorpresas en `public/app.js`.
 - El juego de memoria ofrece tres dificultades: fácil (3 parejas), medio (6 parejas) y difícil (10 parejas), con intentos y tiempo.
-- Los juegos se abren en un área central ampliada. Desde allí se puede volver al inicio o pasar al quiz; los resultados jugados se incluyen en el reporte si se acepta la invitación.
+- Los juegos se abren en un área central ampliada sin login. Desde allí se puede volver al inicio o pasar al login del quiz; los resultados jugados se incluyen en el reporte si se acepta la invitación.
 - Ajusta la velocidad y las reglas de los juegos de bloques y pajarito en `public/games.js`. Bloques llega al nivel 10 y se completa al despejar 40 filas.
 - La fecha opcional solo admite desde el día actual; el servidor vuelve a comprobarla en la zona horaria de Lima.
 - Cambia el usuario y el código en `lib/config.js`. Los valores iniciales son `chica` y `123`.
@@ -22,9 +22,9 @@ Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código
 2. En Vercel, importa el repositorio como proyecto sin framework ni comando de compilación.
 3. Configura las variables del correo en Vercel para Production (y Preview si vas a probar allí). El usuario y código pueden quedarse con los valores iniciales mientras revisas el diseño.
 4. Verifica el dominio remitente en Resend y crea su API key. Configura `REPORT_FROM_EMAIL` usando ese dominio.
-5. Publica y prueba el enlace con el nombre y el código. El correo solo se envía al pulsar «Enviar mi respuesta».
+5. Publica y prueba los juegos sin acceder y el quiz con el nombre y el código. El correo solo se envía al pulsar «Acepto la invitación».
 
-El HTML puede verse abriendo `public/index.html`, pero el login requiere la función de Vercel; el envío también necesita las variables de correo. Para desarrollo local, usa `vercel dev`. Vercel sirve los archivos visuales desde `public/` y ejecuta las funciones desde `api/`. No se almacena la respuesta en una base de datos.
+El HTML puede verse abriendo `public/index.html`, pero el login del quiz requiere la función de Vercel; el envío también necesita las variables de correo. Para desarrollo local, usa `vercel dev`. Vercel sirve los archivos visuales desde `public/` y ejecuta las funciones desde `api/`. No se almacena la respuesta en una base de datos.
 
 ## Antes de compartir
 
