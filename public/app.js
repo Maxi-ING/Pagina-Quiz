@@ -1,13 +1,14 @@
 const $ = (id) => document.getElementById(id);
 const state = { name: '', answers: null, games: [] };
 let activeGameCleanup = null;
+let quizReturnView = 'welcomeView';
 function localDate() {
   const now = new Date();
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 }
 function updateDateLimit() { $('dateIdea').min = localDate(); }
 updateDateLimit();
-const stages = { loginView: [0, 'Un momento para ti'], welcomeView: [20, 'Elige tu camino'], quizView: [45, 'Tus gustos'], gamesView: [35, 'Juegos'], finalView: [90, 'La invitación'], thanksView: [100, 'Listo'] };
+const stages = { loginView: [25, 'Acceso al quiz'], welcomeView: [0, 'Elige tu camino'], quizView: [45, 'Tus gustos'], gamesView: [20, 'Juegos'], finalView: [90, 'La invitación'], thanksView: [100, 'Listo'] };
 function show(id) {
   if (id !== 'gamesView') { activeGameCleanup?.(); activeGameCleanup = null; $('gameArea').replaceChildren(); $('gameArea').hidden = true; }
   document.querySelectorAll('.view').forEach((view) => view.classList.toggle('active', view.id === id));
@@ -30,15 +31,20 @@ $('loginForm').addEventListener('submit', async (event) => {
   try {
     const name = $('guestName').value.trim();
     await post('/api/login', { name, code: $('guestCode').value });
-    state.name = name; $('welcomeName').textContent = name; $('guestCode').value = ''; show('welcomeView');
+    state.name = name; $('guestCode').value = ''; show('quizView');
   } catch (error) { $('loginError').textContent = error.message; }
   finally { busy(button, false); }
 });
-$('startButton').addEventListener('click', () => show('quizView'));
+function enterQuiz(from) {
+  quizReturnView = from;
+  show(state.name ? 'quizView' : 'loginView');
+}
+$('startButton').addEventListener('click', () => enterQuiz('welcomeView'));
 $('startGamesButton').addEventListener('click', () => show('gamesView'));
+$('loginBackButton').addEventListener('click', () => show(quizReturnView));
 $('quizHomeButton').addEventListener('click', () => show('welcomeView'));
 $('gamesHomeButton').addEventListener('click', () => show('welcomeView'));
-$('gamesToQuizButton').addEventListener('click', () => show('quizView'));
+$('gamesToQuizButton').addEventListener('click', () => enterQuiz('gamesView'));
 function renderSummary() {
   const summary = $('answerSummary'); summary.replaceChildren();
   for (const [label, value] of [['Comida', state.answers.food], ['Lugar', state.answers.place], ['Momento', state.answers.time], ['Fecha tentativa', state.answers.date]]) {
