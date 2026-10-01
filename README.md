@@ -12,14 +12,14 @@ Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código
 - Cambia el usuario y el código en `lib/config.js`. Los valores iniciales son `chica` y `123`.
 - También puedes definir `GUEST_NAME` y `ACCESS_CODE` en Vercel; estas variables tienen prioridad sobre el código.
 - El código `123` sirve para probar. Este repositorio es público y cualquiera puede verlo, así que antes de compartir la invitación usa un código largo configurado en Vercel.
-- Para enviar correos, configura `RESEND_API_KEY` y `REPORT_FROM_EMAIL` en Vercel. También se recomienda configurar `SESSION_SECRET` con una cadena aleatoria. Nunca publiques claves ni secretos en GitHub.
-- Las respuestas se envían por defecto a `oliverio.trujillo1@gmail.com`. Esta dirección queda visible en el repositorio público; puedes cambiarla con `REPORT_TO_EMAIL` en Vercel. `REPORT_FROM_EMAIL` debe usar un remitente autorizado en Resend.
+- Para enviar correos, configura `RESEND_API_KEY`, `REPORT_TO_EMAIL` y `REPORT_FROM_EMAIL` en Vercel. También se recomienda configurar `SESSION_SECRET` con una cadena aleatoria. Nunca publiques estos valores en GitHub.
+- `REPORT_TO_EMAIL` recibe las respuestas; `REPORT_FROM_EMAIL` debe usar un remitente autorizado en Resend.
 
 ## Publicación
 
 1. Sube esta carpeta a un repositorio privado o con textos que no te importe hacer públicos.
 2. En Vercel, importa el repositorio como proyecto sin framework ni comando de compilación.
-3. Configura la clave y el remitente del correo en Vercel para Production (y Preview si vas a probar allí). El usuario y código pueden quedarse con los valores iniciales mientras revisas el diseño.
+3. Configura las variables del correo en Vercel para Production (y Preview si vas a probar allí). El usuario y código pueden quedarse con los valores iniciales mientras revisas el diseño.
 4. Verifica el dominio remitente en Resend y crea su API key. Configura `REPORT_FROM_EMAIL` usando ese dominio.
 5. Publica y prueba el enlace con el nombre y el código. El correo solo se envía al pulsar «Enviar mi respuesta».
 
@@ -27,4 +27,4 @@ El HTML puede verse abriendo `public/index.html`, pero el login requiere la func
 
 ## Antes de compartir
 
-Sustituye el nombre, código, remitente y textos generales por los definitivos. Revisa que las opciones de comida y actividades encajen con ella. No uses el login para pedir credenciales de cuentas reales.
+Sustituye el nombre, código, dirección destinataria, remitente y textos generales por los definitivos. Revisa que las opciones de comida y actividades encajen con ella. No uses el login para pedir credenciales de cuentas reales.
