@@ -12,7 +12,7 @@ window.MiniGames = (() => {
     return button;
   }
   function mountTetris(host, onResult) {
-    const cols = 10, rows = 20, cell = 24;
+    const cols = 10, rows = 20, cell = 28;
     const shapes = [
       { id: 'I', matrix: [[1, 1, 1, 1]], color: '#60b5bf' },
       { id: 'O', matrix: [[1, 1], [1, 1]], color: '#e8bd65' },
@@ -81,9 +81,10 @@ window.MiniGames = (() => {
       board.forEach((row, y) => row.forEach((color, x) => { if (color) block(x, y, color); }));
       if (current) current.matrix.forEach((row, y) => row.forEach((filled, x) => { if (filled) block(current.x + x, current.y + y, current.color); }));
       if (status !== 'jugando') {
-        ctx.fillStyle = '#211b27d9'; ctx.fillRect(0, 185, canvas.width, 105);
-        ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.font = 'bold 21px sans-serif'; ctx.fillText(status === 'victoria' ? '¡Ganaste!' : 'Fin del juego', 120, 226);
-        ctx.font = '13px sans-serif'; ctx.fillText('Pulsa ↻ para volver a jugar', 120, 252);
+        const middle = canvas.height / 2;
+        ctx.fillStyle = '#211b27d9'; ctx.fillRect(0, middle - 52, canvas.width, 105);
+        ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.font = 'bold 21px sans-serif'; ctx.fillText(status === 'victoria' ? '¡Ganaste!' : 'Fin del juego', canvas.width / 2, middle - 11);
+        ctx.font = '13px sans-serif'; ctx.fillText('Pulsa ↻ para volver a jugar', canvas.width / 2, middle + 15);
       }
     }
     function tick(timestamp) {
@@ -108,9 +109,9 @@ window.MiniGames = (() => {
   }
 
   function mountBird(host, onResult) {
-    const canvas = el('canvas', 'arcade-canvas bird-canvas'); canvas.width = 320; canvas.height = 440;
+    const canvas = el('canvas', 'arcade-canvas bird-canvas'); canvas.width = 640; canvas.height = 880;
     canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', 'Pajarito volando entre obstáculos');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d'); ctx.scale(2, 2);
     const statusLine = el('p', 'arcade-stats'); statusLine.setAttribute('role', 'status');
     const hint = el('p', 'arcade-hint', 'Toca la pantalla, pulsa espacio o usa el botón Volar. Evita los obstáculos y supera tu marca.');
     const flapButton = control('Volar ↑', 'Hacer volar al pajarito', flap);
