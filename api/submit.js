@@ -24,9 +24,8 @@ function validFutureDate(value) {
 }
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido.' });
-  const { RESEND_API_KEY, REPORT_FROM_EMAIL } = process.env;
-  const REPORT_TO_EMAIL = process.env.REPORT_TO_EMAIL || 'oliverio.trujillo1@gmail.com';
-  if (!RESEND_API_KEY || !REPORT_FROM_EMAIL) return res.status(503).json({ error: 'El envío de correo aún no está configurado.' });
+  const { RESEND_API_KEY, REPORT_TO_EMAIL, REPORT_FROM_EMAIL } = process.env;
+  if (!RESEND_API_KEY || !REPORT_TO_EMAIL || !REPORT_FROM_EMAIL) return res.status(503).json({ error: 'El envío de correo aún no está configurado.' });
   const guest = session(req, SESSION_SECRET);
   if (!guest) return res.status(401).json({ error: 'Tu sesión venció. Actualiza la página e ingresa nuevamente.' });
   const body = req.body || {}, answers = body.answers || {};
