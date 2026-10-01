@@ -4,8 +4,8 @@ Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código
 
 ## Personalización
 
-- Ajusta los textos y las opciones en `index.html`.
-- Ajusta las ideas del juego de sorpresas en `app.js`.
+- Ajusta los textos y las opciones en `public/index.html`.
+- Ajusta las ideas del juego de sorpresas en `public/app.js`.
 - Cambia el usuario y el código en `lib/config.js`. Los valores iniciales son `chica` y `123`.
 - También puedes definir `GUEST_NAME` y `ACCESS_CODE` en Vercel; estas variables tienen prioridad sobre el código.
 - El código `123` sirve para probar. Este repositorio es público y cualquiera puede verlo, así que antes de compartir la invitación usa un código largo configurado en Vercel.
@@ -20,7 +20,7 @@ Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código
 4. Verifica el dominio remitente en Resend y crea su API key. Configura `REPORT_FROM_EMAIL` usando ese dominio.
 5. Publica y prueba el enlace con el nombre y el código. El correo solo se envía al pulsar «Enviar mi respuesta».
 
-El HTML puede verse abriendo `index.html`, pero el login requiere la función de Vercel; el envío también necesita las variables de correo. Para desarrollo local, usa `vercel dev`. No se almacena la respuesta en una base de datos.
+El HTML puede verse abriendo `public/index.html`, pero el login requiere la función de Vercel; el envío también necesita las variables de correo. Para desarrollo local, usa `vercel dev`. Vercel sirve los archivos visuales desde `public/` y ejecuta las funciones desde `api/`. No se almacena la respuesta en una base de datos.
 
 ## Antes de compartir
 
