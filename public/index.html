@@ -33,9 +33,12 @@
 
     <section id="welcomeView" class="view" aria-labelledby="welcomeTitle">
       <p class="eyebrow">QUÉ BUENO VERTE AQUÍ</p><h1 id="welcomeTitle">Hola, <span id="welcomeName"></span>.</h1>
-      <p class="intro">Quisiera invitarte a compartir un momento bonito. Primero, cuéntame qué te gustaría; después hay varios juegos si te apetece.</p>
+      <p class="intro">Quisiera invitarte a compartir un momento bonito. Elige si prefieres imaginar nuestra cita o empezar con un juego.</p>
       <div class="note"><span aria-hidden="true">✦</span><p>No hay respuestas correctas. Elige lo que te haga sentir más cómoda.</p></div>
-      <button id="startButton" class="primary">Empezar <span aria-hidden="true">→</span></button>
+      <div class="welcome-actions">
+        <button id="startButton" class="primary" type="button">La cita y el quiz <span aria-hidden="true">→</span></button>
+        <button id="startGamesButton" class="secondary" type="button">Ir a los juegos <span aria-hidden="true">✧</span></button>
+      </div>
     </section>
 
     <section id="quizView" class="view" aria-labelledby="quizTitle">
@@ -51,23 +54,24 @@
           <label><input type="radio" name="time" value="Por la mañana"><span>☀️ Mañana</span></label><label><input type="radio" name="time" value="Por la tarde"><span>🌤️ Tarde</span></label><label><input type="radio" name="time" value="Por la noche"><span>🌙 Noche</span></label>
         </div><label class="sub-label" for="dateIdea">Fecha tentativa (opcional)</label><input type="date" name="date" id="dateIdea"><small class="helper">Solo puedes elegir desde hoy en adelante.</small></fieldset>
         <label class="sub-label" for="extraMessage">¿Algo más que debería saber?</label><textarea name="note" id="extraMessage" maxlength="500" rows="3" placeholder="Algún gusto, límite o idea que quieras contarme..."></textarea>
-        <button class="primary" type="submit">Continuar <span aria-hidden="true">→</span></button><p id="quizError" class="feedback" role="alert"></p>
+        <button class="primary" type="submit">Ver la invitación <span aria-hidden="true">→</span></button><p id="quizError" class="feedback" role="alert"></p>
       </form>
+      <button id="quizHomeButton" class="text-button" type="button">← Volver al inicio</button>
     </section>
 
     <section id="gamesView" class="view" aria-labelledby="gamesTitle">
-      <p class="eyebrow">02 / UNA PAUSA PARA JUGAR</p><h1 id="gamesTitle">Un poquito de diversión, si quieres.</h1>
-      <p class="intro">Prueba el que te apetezca o ve directo a la invitación. Puedes cambiar de juego cuando quieras.</p>
+      <p class="eyebrow">UN ESPACIO PARA JUGAR</p><h1 id="gamesTitle">Un poquito de diversión, si quieres.</h1>
+      <p class="intro">Elige un juego y disfruta a tu ritmo. Puedes cambiar de juego cuando quieras.</p>
+      <div id="gameArea" class="game-area" hidden></div>
       <div class="games-grid"><article class="game-card"><span class="game-icon">✿</span><h2>Encuentra las parejas</h2><p>Elige entre fácil, medio y difícil. Recuerda las cartas y encuentra sus pares.</p><button id="memoryButton" class="secondary">Jugar</button></article>
       <article class="game-card"><span class="game-icon">✧</span><h2>Elige una sorpresa</h2><p>Escoge una tarjeta y descubre una idea para nuestra cita.</p><button id="surpriseButton" class="secondary">Descubrir</button></article>
       <article class="game-card"><span class="game-icon">▦</span><h2>Bloques hasta nivel 10</h2><p>Encaja piezas, completa filas y supera los diez niveles.</p><button id="tetrisButton" class="secondary">Jugar</button></article>
       <article class="game-card"><span class="game-icon">🐦</span><h2>El pajarito</h2><p>Vuela entre obstáculos con un toque o la barra espaciadora.</p><button id="birdButton" class="secondary">Volar</button></article></div>
-      <div id="gameArea" class="game-area" hidden></div>
-      <button id="skipGamesButton" class="text-button">Ir a la invitación <span aria-hidden="true">→</span></button>
+      <div class="games-navigation"><button id="gamesHomeButton" class="text-button" type="button">← Volver al inicio</button><button id="gamesToQuizButton" class="text-button" type="button">Ir al quiz de la cita →</button></div>
     </section>
 
     <section id="finalView" class="view" aria-labelledby="finalTitle">
-      <p class="eyebrow">03 / MI PROPUESTA</p><div class="hero-symbol" aria-hidden="true">♡</div><h1 id="finalTitle">Te invito a salir conmigo.</h1>
+      <p class="eyebrow">02 / MI PROPUESTA</p><div class="hero-symbol" aria-hidden="true">♡</div><h1 id="finalTitle">Te invito a salir conmigo.</h1>
       <p class="intro">Quiero pasar un rato contigo. Este es el plan con lo que elegiste; yo me encargo de invitarte.</p>
       <div id="answerSummary" class="summary"></div>
       <label class="sub-label" for="finalMessage">Un mensaje para mí (opcional)</label><textarea id="finalMessage" maxlength="1000" rows="3" placeholder="Lo que quieras decirme..."></textarea>
