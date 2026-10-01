@@ -1,9 +1,8 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { GUEST_NAME, ACCESS_CODE, SESSION_SECRET } from '../lib/config.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido.' });
-  const { GUEST_NAME, ACCESS_CODE, SESSION_SECRET } = process.env;
-  if (!GUEST_NAME || !ACCESS_CODE || !SESSION_SECRET) return res.status(503).json({ error: 'La invitación aún no está configurada.' });
   const name = typeof req.body?.name === 'string' ? req.body.name.trim() : '';
   const code = typeof req.body?.code === 'string' ? req.body.code : '';
   if (name.length > 60 || code.length > 100 || !name || !code) return res.status(400).json({ error: 'Completa tu nombre y el código.' });
