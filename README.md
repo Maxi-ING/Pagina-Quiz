@@ -6,6 +6,7 @@ Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código
 
 - Ajusta los textos y las opciones en `public/index.html`.
 - Ajusta las ideas del juego de sorpresas en `public/app.js`.
+- El juego de memoria ofrece tres dificultades: fácil (3 parejas), medio (6 parejas) y difícil (10 parejas), con intentos y tiempo.
 - Ajusta la velocidad y las reglas de los juegos de bloques y pajarito en `public/games.js`. Bloques llega al nivel 10 y se completa al despejar 40 filas.
 - La fecha opcional solo admite desde el día actual; el servidor vuelve a comprobarla en la zona horaria de Lima.
 - Cambia el usuario y el código en `lib/config.js`. Los valores iniciales son `chica` y `123`.
