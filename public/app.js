@@ -7,10 +7,11 @@ function localDate() {
 }
 function updateDateLimit() { $('dateIdea').min = localDate(); }
 updateDateLimit();
-const stages = { loginView: [0, 'Un momento para ti'], welcomeView: [20, 'Bienvenida'], quizView: [45, 'Tus gustos'], gamesView: [70, 'Una pausa para jugar'], finalView: [90, 'La invitación'], thanksView: [100, 'Listo'] };
+const stages = { loginView: [0, 'Un momento para ti'], welcomeView: [20, 'Elige tu camino'], quizView: [45, 'Tus gustos'], gamesView: [35, 'Juegos'], finalView: [90, 'La invitación'], thanksView: [100, 'Listo'] };
 function show(id) {
-  if (id !== 'gamesView') { activeGameCleanup?.(); activeGameCleanup = null; }
+  if (id !== 'gamesView') { activeGameCleanup?.(); activeGameCleanup = null; $('gameArea').replaceChildren(); $('gameArea').hidden = true; }
   document.querySelectorAll('.view').forEach((view) => view.classList.toggle('active', view.id === id));
+  document.querySelector('.shell').classList.toggle('games-mode', id === 'gamesView');
   $('progressFill').style.width = `${stages[id][0]}%`;
   $('progressLabel').textContent = stages[id][1];
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -34,6 +35,17 @@ $('loginForm').addEventListener('submit', async (event) => {
   finally { busy(button, false); }
 });
 $('startButton').addEventListener('click', () => show('quizView'));
+$('startGamesButton').addEventListener('click', () => show('gamesView'));
+$('quizHomeButton').addEventListener('click', () => show('welcomeView'));
+$('gamesHomeButton').addEventListener('click', () => show('welcomeView'));
+$('gamesToQuizButton').addEventListener('click', () => show('quizView'));
+function renderSummary() {
+  const summary = $('answerSummary'); summary.replaceChildren();
+  for (const [label, value] of [['Comida', state.answers.food], ['Lugar', state.answers.place], ['Momento', state.answers.time], ['Fecha tentativa', state.answers.date]]) {
+    if (!value) continue; const line = document.createElement('p'); const bold = document.createElement('strong'); bold.textContent = `${label}: `; line.append(bold, document.createTextNode(value)); summary.append(line);
+  }
+  if (state.answers.note) { const note = document.createElement('p'); const bold = document.createElement('strong'); bold.textContent = 'Tu idea: '; note.append(bold, document.createTextNode(state.answers.note)); summary.append(note); }
+}
 $('quizForm').addEventListener('submit', (event) => {
   event.preventDefault(); updateDateLimit(); const form = new FormData(event.currentTarget);
   const food = String(form.get('foodOther') || '').trim() || form.get('food');
@@ -47,9 +59,18 @@ $('quizForm').addEventListener('submit', (event) => {
   }
   $('quizError').textContent = '';
   state.answers = { food, place, time, date, note: String(form.get('note') || '').trim() };
-  show('gamesView');
+  renderSummary(); show('finalView');
 });
-function gameMarkup(title, content) { activeGameCleanup?.(); activeGameCleanup = null; $('gameArea').hidden = false; $('gameArea').replaceChildren(); const h = document.createElement('h2'); h.textContent = title; $('gameArea').append(h, content); $('gameArea').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+function gameMarkup(title, content) {
+  activeGameCleanup?.(); activeGameCleanup = null;
+  const gameArea = $('gameArea'); gameArea.hidden = false; gameArea.replaceChildren(); gameArea.tabIndex = -1;
+  const heading = document.createElement('div'); heading.className = 'game-area-heading';
+  const h = document.createElement('h2'); h.textContent = title;
+  const close = document.createElement('button'); close.type = 'button'; close.className = 'secondary game-close'; close.textContent = 'Cerrar juego';
+  close.addEventListener('click', () => { activeGameCleanup?.(); activeGameCleanup = null; gameArea.replaceChildren(); gameArea.hidden = true; $('gamesTitle').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  heading.append(h, close); gameArea.append(heading, content);
+  gameArea.scrollIntoView({ behavior: 'smooth', block: 'center' }); gameArea.focus({ preventScroll: true });
+}
 $('memoryButton').addEventListener('click', () => {
   const options = [{ label: 'Fácil', pairs: 3, columns: 3 }, { label: 'Medio', pairs: 6, columns: 4 }, { label: 'Difícil', pairs: 10, columns: 5 }];
   const symbols = ['🌹', '🍰', '☕', '🎨', '🌿', '💌', '🌙', '🎵', '🍓', '✨'];
@@ -72,7 +93,7 @@ $('memoryButton').addEventListener('click', () => {
   function start(option) {
     stopTimers(); selected = option; elapsed = 0; attempts = 0; matches = 0; open = []; locked = false; result.textContent = ''; restart.hidden = false;
     [...levels.children].forEach((button) => { button.classList.toggle('chosen', button.textContent.startsWith(option.label)); button.setAttribute('aria-pressed', String(button.textContent.startsWith(option.label))); });
-    board.replaceChildren(); board.style.setProperty('--memory-columns', String(option.columns)); board.style.maxWidth = `${option.columns * 92 + (option.columns - 1) * 10}px`;
+    board.replaceChildren(); board.style.setProperty('--memory-columns', String(option.columns)); board.style.maxWidth = `${option.columns * 112 + (option.columns - 1) * 12}px`;
     const deck = shuffle([...symbols.slice(0, option.pairs), ...symbols.slice(0, option.pairs)]);
     deck.forEach((symbol, index) => {
       const card = document.createElement('button'); card.type = 'button'; card.className = 'memory-card'; card.setAttribute('aria-label', `Carta ${index + 1} oculta`);
@@ -133,14 +154,6 @@ $('tetrisButton').addEventListener('click', () => {
 $('birdButton').addEventListener('click', () => {
   const area = document.createElement('div'); gameMarkup('El pajarito', area);
   activeGameCleanup = window.MiniGames.mountBird(area, (score) => recordGame('Pajarito:', `Pajarito: ${score} obstáculos`));
-});
-$('skipGamesButton').addEventListener('click', () => {
-  const summary = $('answerSummary'); summary.replaceChildren();
-  for (const [label, value] of [['Comida', state.answers.food], ['Lugar', state.answers.place], ['Momento', state.answers.time], ['Fecha tentativa', state.answers.date]]) {
-    if (!value) continue; const line = document.createElement('p'); const bold = document.createElement('strong'); bold.textContent = `${label}: `; line.append(bold, document.createTextNode(value)); summary.append(line);
-  }
-  if (state.answers.note) { const note = document.createElement('p'); const bold = document.createElement('strong'); bold.textContent = 'Tu idea: '; note.append(bold, document.createTextNode(state.answers.note)); summary.append(note); }
-  show('finalView');
 });
 $('sendButton').addEventListener('click', async () => {
   $('sendError').textContent = ''; const button = $('sendButton'); busy(button, true);
