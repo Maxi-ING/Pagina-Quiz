@@ -15,24 +15,25 @@
 <body>
   <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
   <main class="shell">
-    <header class="topbar"><span class="brand">✦ UNA INVITACIÓN</span><span id="progressLabel" class="progress-label">Un momento para ti</span></header>
+    <header class="topbar"><span class="brand">✦ UNA INVITACIÓN</span><span id="progressLabel" class="progress-label">Elige tu camino</span></header>
     <div class="progress" aria-hidden="true"><div id="progressFill"></div></div>
 
-    <section id="loginView" class="view active" aria-labelledby="loginTitle">
+    <section id="loginView" class="view" aria-labelledby="loginTitle">
       <div class="hero-symbol" aria-hidden="true">✿</div>
       <p class="eyebrow">UNA PEQUEÑA SORPRESA</p>
       <h1 id="loginTitle">Hay planes que empiezan con una pregunta.</h1>
-      <p class="intro">Preparé este espacio especialmente para ti. Entra y descubre lo que tengo en mente.</p>
+      <p class="intro">Ingresa para responder el quiz y descubrir la invitación.</p>
       <form id="loginForm" class="form-card">
         <label for="guestName">Usuario</label><input id="guestName" name="name" autocomplete="username" required maxlength="60" placeholder="Escribe tu usuario">
         <label for="guestCode">Código de acceso</label><input id="guestCode" name="code" type="password" autocomplete="off" required maxlength="100" placeholder="Nuestro pequeño secreto">
         <button class="primary" type="submit">Abrir la invitación <span aria-hidden="true">↗</span></button>
         <p id="loginError" class="feedback" role="alert"></p>
       </form>
+      <button id="loginBackButton" class="text-button" type="button">← Volver</button>
     </section>
 
-    <section id="welcomeView" class="view" aria-labelledby="welcomeTitle">
-      <p class="eyebrow">QUÉ BUENO VERTE AQUÍ</p><h1 id="welcomeTitle">Hola, <span id="welcomeName"></span>.</h1>
+    <section id="welcomeView" class="view active" aria-labelledby="welcomeTitle">
+      <p class="eyebrow">QUÉ BUENO VERTE AQUÍ</p><h1 id="welcomeTitle">Una invitación para ti.</h1>
       <p class="intro">Quisiera invitarte a compartir un momento bonito. Elige si prefieres imaginar nuestra cita o empezar con un juego.</p>
       <div class="note"><span aria-hidden="true">✦</span><p>No hay respuestas correctas. Elige lo que te haga sentir más cómoda.</p></div>
       <div class="welcome-actions">
