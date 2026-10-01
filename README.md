@@ -6,19 +6,21 @@ Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código
 
 - Ajusta los textos y las opciones en `index.html`.
 - Ajusta las ideas del juego de sorpresas en `app.js`.
-- En Vercel configura las variables de `.env.example`. Nunca publiques los valores reales en GitHub.
-- `GUEST_NAME` es el nombre que ella escribirá. `ACCESS_CODE` es un código para esta invitación, no su contraseña personal.
+- Cambia el usuario y el código en `lib/config.js`. Los valores iniciales son `chica` y `123`.
+- También puedes definir `GUEST_NAME` y `ACCESS_CODE` en Vercel; estas variables tienen prioridad sobre el código.
+- El código `123` sirve para probar. Este repositorio es público y cualquiera puede verlo, así que antes de compartir la invitación usa un código largo configurado en Vercel.
+- Para enviar correos, configura `RESEND_API_KEY`, `REPORT_TO_EMAIL` y `REPORT_FROM_EMAIL` en Vercel. También se recomienda configurar `SESSION_SECRET` con una cadena aleatoria. Nunca publiques estos valores en GitHub.
 - `REPORT_TO_EMAIL` recibe las respuestas; `REPORT_FROM_EMAIL` debe usar un remitente autorizado en Resend.
 
 ## Publicación
 
 1. Sube esta carpeta a un repositorio privado o con textos que no te importe hacer públicos.
 2. En Vercel, importa el repositorio como proyecto sin framework ni comando de compilación.
-3. Añade las seis variables de `.env.example` en la configuración del proyecto para Production (y Preview si vas a probar allí).
+3. Configura las variables del correo en Vercel para Production (y Preview si vas a probar allí). El usuario y código pueden quedarse con los valores iniciales mientras revisas el diseño.
 4. Verifica el dominio remitente en Resend y crea su API key. Configura `REPORT_FROM_EMAIL` usando ese dominio.
 5. Publica y prueba el enlace con el nombre y el código. El correo solo se envía al pulsar «Enviar mi respuesta».
 
-El HTML puede verse abriendo `index.html`, pero el login y envío requieren las funciones de Vercel y sus variables. Para desarrollo local, usa `vercel dev` con las variables locales correspondientes. No se almacena la respuesta en una base de datos.
+El HTML puede verse abriendo `index.html`, pero el login requiere la función de Vercel; el envío también necesita las variables de correo. Para desarrollo local, usa `vercel dev`. No se almacena la respuesta en una base de datos.
 
 ## Antes de compartir
 
