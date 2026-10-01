@@ -77,8 +77,8 @@ $('memoryButton').addEventListener('click', () => {
     deck.forEach((symbol, index) => {
       const card = document.createElement('button'); card.type = 'button'; card.className = 'memory-card'; card.setAttribute('aria-label', `Carta ${index + 1} oculta`);
       const inner = document.createElement('span'); inner.className = 'memory-card-inner';
-      const back = document.createElement('span'); back.className = 'memory-face memory-back'; back.textContent = '✦';
-      const front = document.createElement('span'); front.className = 'memory-face memory-front'; front.textContent = symbol;
+      const back = document.createElement('span'); back.className = 'memory-face memory-back'; back.textContent = '✦'; back.setAttribute('aria-hidden', 'true');
+      const front = document.createElement('span'); front.className = 'memory-face memory-front'; front.textContent = symbol; front.setAttribute('aria-hidden', 'true');
       inner.append(back, front); card.append(inner);
       card.addEventListener('click', () => {
         if (disposed || locked || card.classList.contains('flipped') || card.classList.contains('matched') || matches === option.pairs) return;
