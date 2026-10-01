@@ -1,11 +1,13 @@
 # Una invitación para ti
 
-Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código, preguntas, dos juegos opcionales y un reporte por correo. Preparada para Vercel; las funciones `api/login.js` y `api/submit.js` validan el acceso y envían el resumen con Resend.
+Página personal en HTML, CSS y JavaScript, con acceso mediante nombre y código, preguntas, cuatro juegos opcionales y una propuesta final que se acepta con un botón. Preparada para Vercel; las funciones `api/login.js` y `api/submit.js` validan el acceso y envían el resumen con Resend.
 
 ## Personalización
 
 - Ajusta los textos y las opciones en `public/index.html`.
 - Ajusta las ideas del juego de sorpresas en `public/app.js`.
+- Ajusta la velocidad y las reglas de los juegos de bloques y pajarito en `public/games.js`. Bloques llega al nivel 10 y se completa al despejar 40 filas.
+- La fecha opcional solo admite desde el día actual; el servidor vuelve a comprobarla en la zona horaria de Lima.
 - Cambia el usuario y el código en `lib/config.js`. Los valores iniciales son `chica` y `123`.
 - También puedes definir `GUEST_NAME` y `ACCESS_CODE` en Vercel; estas variables tienen prioridad sobre el código.
 - El código `123` sirve para probar. Este repositorio es público y cualquiera puede verlo, así que antes de compartir la invitación usa un código largo configurado en Vercel.

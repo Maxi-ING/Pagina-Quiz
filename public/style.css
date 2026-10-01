@@ -10,3 +10,30 @@
 #loginView .form-card .primary{width:100%;min-width:0;padding:13px 17px;margin-top:2px}
 #loginView .feedback{margin-top:2px}
 @media(max-width:650px){#loginView{padding-top:28px;padding-bottom:28px}#loginView .form-card{padding:18px}}
+
+/* Juegos y carta sorpresa */
+.helper{display:block;margin-top:8px;color:#8a7773;font-size:12px}
+.game-card{display:flex;flex-direction:column;align-items:flex-start}
+.game-card .secondary{margin-top:auto}
+.game-area{scroll-margin-top:24px}
+.arcade-layout{display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.arcade-canvas{display:block;max-width:100%;height:auto;border:5px solid #463640;border-radius:14px;box-shadow:0 12px 24px #37263026;touch-action:manipulation}
+.arcade-side{max-width:270px;flex:1;min-width:210px}
+.arcade-stats{font-weight:700;color:#633e4c;line-height:1.5;margin:0 0 12px}
+.arcade-hint{color:#766661;font-size:13px;line-height:1.6}
+.arcade-controls{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0}
+.game-control{cursor:pointer;min-width:45px;min-height:44px;border:1px solid #c9959c;border-radius:10px;background:#fff7f4;color:#873f51;font:700 19px 'DM Sans',sans-serif;touch-action:manipulation}
+.game-control:hover{background:#f3e1de}
+.game-control.secondary{font-size:15px;padding:8px 14px}
+.bird-canvas{border-color:#9e737d;cursor:pointer}
+.surprise-modal{position:fixed;inset:0;margin:auto;border:1px solid #e8c9c4;border-radius:24px;background:#fff9f4;color:#46363c;padding:34px;width:min(90vw,440px);text-align:center;box-shadow:0 25px 85px #37263052;max-height:90vh;overflow:auto}
+.surprise-modal::backdrop{background:#33222b99;backdrop-filter:blur(4px)}
+.surprise-modal[open]{animation:modal-rise .4s ease both}
+@keyframes modal-rise{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;border:0;background:none;color:#875b62;font-size:27px;cursor:pointer}
+.reveal-card{width:125px;height:170px;border-radius:14px;background:linear-gradient(145deg,#a95265,#7b344a);border:7px solid #f3d9d5;box-shadow:0 12px 25px #7b344a36;margin:22px auto;display:grid;place-items:center;animation:card-reveal .75s cubic-bezier(.2,.7,.2,1) both;backface-visibility:hidden}
+.reveal-card span{font-family:Georgia,serif;font-size:58px;color:#fff4e7}
+@keyframes card-reveal{from{opacity:0;transform:perspective(500px) rotateY(-95deg) scale(.8)}to{opacity:1;transform:perspective(500px) rotateY(0deg) scale(1)}}
+.surprise-modal h2{margin:5px 0 10px}.surprise-modal p:not(.eyebrow){line-height:1.6}
+@media(max-width:650px){.arcade-layout{justify-content:center}.arcade-side{min-width:100%;text-align:center}.arcade-controls{justify-content:center}.game-area{padding:16px}.surprise-modal{padding:25px}}
+@media(prefers-reduced-motion:reduce){.surprise-modal[open],.reveal-card{animation:none}}

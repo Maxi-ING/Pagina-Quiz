@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
+  <script src="/games.js" defer></script>
 </head>
 <body>
   <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
@@ -48,7 +49,7 @@
         </div><input name="placeOther" maxlength="100" placeholder="Otro lugar (opcional)"></fieldset>
         <fieldset><legend>¿Qué momento te viene mejor?</legend><div class="choices">
           <label><input type="radio" name="time" value="Por la mañana"><span>☀️ Mañana</span></label><label><input type="radio" name="time" value="Por la tarde"><span>🌤️ Tarde</span></label><label><input type="radio" name="time" value="Por la noche"><span>🌙 Noche</span></label>
-        </div><label class="sub-label" for="dateIdea">Fecha tentativa (opcional)</label><input type="date" name="date" id="dateIdea"></fieldset>
+        </div><label class="sub-label" for="dateIdea">Fecha tentativa (opcional)</label><input type="date" name="date" id="dateIdea"><small class="helper">Solo puedes elegir desde hoy en adelante.</small></fieldset>
         <label class="sub-label" for="extraMessage">¿Algo más que debería saber?</label><textarea name="note" id="extraMessage" maxlength="500" rows="3" placeholder="Algún gusto, límite o idea que quieras contarme..."></textarea>
         <button class="primary" type="submit">Continuar <span aria-hidden="true">→</span></button><p id="quizError" class="feedback" role="alert"></p>
       </form>
@@ -56,29 +57,27 @@
 
     <section id="gamesView" class="view" aria-labelledby="gamesTitle">
       <p class="eyebrow">02 / UNA PAUSA PARA JUGAR</p><h1 id="gamesTitle">Un poquito de diversión, si quieres.</h1>
-      <p class="intro">Hay dos juegos cortitos. Puedes probarlos o ir directo a la invitación.</p>
+      <p class="intro">Prueba el que te apetezca o ve directo a la invitación. Puedes cambiar de juego cuando quieras.</p>
       <div class="games-grid"><article class="game-card"><span class="game-icon">✿</span><h2>Encuentra las parejas</h2><p>Destapa seis cartas y une los tres pares.</p><button id="memoryButton" class="secondary">Jugar</button></article>
-      <article class="game-card"><span class="game-icon">✧</span><h2>Elige una sorpresa</h2><p>Escoge una tarjeta y descubre una idea para nuestra cita.</p><button id="surpriseButton" class="secondary">Descubrir</button></article></div>
+      <article class="game-card"><span class="game-icon">✧</span><h2>Elige una sorpresa</h2><p>Escoge una tarjeta y descubre una idea para nuestra cita.</p><button id="surpriseButton" class="secondary">Descubrir</button></article>
+      <article class="game-card"><span class="game-icon">▦</span><h2>Bloques hasta nivel 10</h2><p>Encaja piezas, completa filas y supera los diez niveles.</p><button id="tetrisButton" class="secondary">Jugar</button></article>
+      <article class="game-card"><span class="game-icon">🐦</span><h2>El pajarito</h2><p>Vuela entre obstáculos con un toque o la barra espaciadora.</p><button id="birdButton" class="secondary">Volar</button></article></div>
       <div id="gameArea" class="game-area" hidden></div>
       <button id="skipGamesButton" class="text-button">Ir a la invitación <span aria-hidden="true">→</span></button>
     </section>
 
     <section id="finalView" class="view" aria-labelledby="finalTitle">
-      <p class="eyebrow">03 / LA PREGUNTA IMPORTANTE</p><div class="hero-symbol" aria-hidden="true">♡</div><h1 id="finalTitle">¿Te gustaría salir conmigo?</h1>
-      <p class="intro">Me encantaría pasar un rato contigo y conocernos un poquito más. Tú eliges el ritmo y el plan.</p>
+      <p class="eyebrow">03 / MI PROPUESTA</p><div class="hero-symbol" aria-hidden="true">♡</div><h1 id="finalTitle">Te invito a salir conmigo.</h1>
+      <p class="intro">Quiero pasar un rato contigo. Este es el plan con lo que elegiste; yo me encargo de invitarte.</p>
       <div id="answerSummary" class="summary"></div>
-      <fieldset class="decision"><legend>Tu respuesta</legend><div class="choices">
-        <label><input type="radio" name="decision" value="Sí, me gustaría"><span>💗 Sí, me gustaría</span></label>
-        <label><input type="radio" name="decision" value="Prefiero hablarlo primero"><span>💬 Prefiero hablarlo primero</span></label>
-        <label><input type="radio" name="decision" value="No por ahora"><span>🌷 No por ahora</span></label>
-      </div></fieldset>
       <label class="sub-label" for="finalMessage">Un mensaje para mí (opcional)</label><textarea id="finalMessage" maxlength="1000" rows="3" placeholder="Lo que quieras decirme..."></textarea>
-      <button id="sendButton" class="primary">Enviar mi respuesta <span aria-hidden="true">↗</span></button><p id="sendError" class="feedback" role="alert"></p>
+      <button id="sendButton" class="primary">Acepto la invitación <span aria-hidden="true">♡</span></button><p id="sendError" class="feedback" role="alert"></p>
       <p class="fine-print">Al enviar, tus respuestas se enviarán por correo a quien preparó esta invitación.</p>
     </section>
 
-    <section id="thanksView" class="view" aria-labelledby="thanksTitle"><div class="hero-symbol" aria-hidden="true">✿</div><p class="eyebrow">MENSAJE ENVIADO</p><h1 id="thanksTitle">Gracias por responder.</h1><p class="intro">Tu respuesta llegó correctamente. Gracias por regalarme un momento de tu tiempo.</p></section>
+    <section id="thanksView" class="view" aria-labelledby="thanksTitle"><div class="hero-symbol" aria-hidden="true">✿</div><p class="eyebrow">INVITACIÓN ACEPTADA</p><h1 id="thanksTitle">Entonces, tenemos una cita.</h1><p class="intro">Recibí tu respuesta. Me hace ilusión compartir ese momento contigo.</p></section>
     <footer>Hecho con cariño <span aria-hidden="true">✦</span></footer>
   </main>
+  <dialog id="surpriseDialog" class="surprise-modal" aria-labelledby="surpriseTitle"><button id="closeSurprise" type="button" class="modal-close" aria-label="Cerrar sorpresa">×</button><p class="eyebrow">UNA IDEA PARA LOS DOS</p><div class="reveal-card" aria-hidden="true"><span>✦</span></div><h2 id="surpriseTitle">Tu sorpresa</h2><p id="surpriseText"></p><button id="doneSurprise" class="secondary" type="button">Me gusta</button></dialog>
 </body>
 </html>

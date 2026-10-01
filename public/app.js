@@ -1,7 +1,15 @@
 const $ = (id) => document.getElementById(id);
 const state = { name: '', answers: null, games: [] };
+let activeGameCleanup = null;
+function localDate() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+function updateDateLimit() { $('dateIdea').min = localDate(); }
+updateDateLimit();
 const stages = { loginView: [0, 'Un momento para ti'], welcomeView: [20, 'Bienvenida'], quizView: [45, 'Tus gustos'], gamesView: [70, 'Una pausa para jugar'], finalView: [90, 'La invitación'], thanksView: [100, 'Listo'] };
 function show(id) {
+  if (id !== 'gamesView') { activeGameCleanup?.(); activeGameCleanup = null; }
   document.querySelectorAll('.view').forEach((view) => view.classList.toggle('active', view.id === id));
   $('progressFill').style.width = `${stages[id][0]}%`;
   $('progressLabel').textContent = stages[id][1];
@@ -27,16 +35,21 @@ $('loginForm').addEventListener('submit', async (event) => {
 });
 $('startButton').addEventListener('click', () => show('quizView'));
 $('quizForm').addEventListener('submit', (event) => {
-  event.preventDefault(); const form = new FormData(event.currentTarget);
+  event.preventDefault(); updateDateLimit(); const form = new FormData(event.currentTarget);
   const food = String(form.get('foodOther') || '').trim() || form.get('food');
   const place = String(form.get('placeOther') || '').trim() || form.get('place');
   const time = form.get('time');
   if (!food || !place || !time) { $('quizError').textContent = 'Elige comida, lugar y momento para continuar.'; return; }
+  const date = String(form.get('date') || '');
+  if (date && (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < $('dateIdea').min || !$('dateIdea').checkValidity())) {
+    $('quizError').textContent = 'Elige una fecha válida desde hoy en adelante.';
+    $('dateIdea').focus(); return;
+  }
   $('quizError').textContent = '';
-  state.answers = { food, place, time, date: String(form.get('date') || ''), note: String(form.get('note') || '').trim() };
+  state.answers = { food, place, time, date, note: String(form.get('note') || '').trim() };
   show('gamesView');
 });
-function gameMarkup(title, content) { $('gameArea').hidden = false; $('gameArea').replaceChildren(); const h = document.createElement('h2'); h.textContent = title; $('gameArea').append(h, content); $('gameArea').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+function gameMarkup(title, content) { activeGameCleanup?.(); activeGameCleanup = null; $('gameArea').hidden = false; $('gameArea').replaceChildren(); const h = document.createElement('h2'); h.textContent = title; $('gameArea').append(h, content); $('gameArea').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 $('memoryButton').addEventListener('click', () => {
   const values = ['🌹', '🍰', '☕', '🌹', '🍰', '☕'].sort(() => Math.random() - .5);
   const wrap = document.createElement('div'); wrap.className = 'memory-grid';
@@ -59,22 +72,40 @@ $('memoryButton').addEventListener('click', () => {
 });
 $('surpriseButton').addEventListener('click', () => {
   const ideas = ['Un paseo con algo rico para compartir', 'Una tarde de café y buena conversación', 'Elegir juntos un lugar nuevo'];
-  const wrap = document.createElement('div'); wrap.className = 'surprise-grid'; const result = document.createElement('p'); result.setAttribute('role', 'status');
-  ideas.forEach((idea, i) => { const button = document.createElement('button'); button.type = 'button'; button.textContent = '✦'; button.setAttribute('aria-label', `Sorpresa ${i + 1}`); button.addEventListener('click', () => { result.textContent = `Tu sorpresa: ${idea}.`; state.games = state.games.filter((game) => !game.startsWith('Sorpresa:')); state.games.push(`Sorpresa: ${idea}`); [...wrap.children].forEach((child) => { child.disabled = true; }); }); wrap.append(button); });
-  const area = document.createElement('div'); area.append(wrap, result); gameMarkup('Elige una sorpresa', area);
+  const wrap = document.createElement('div'); wrap.className = 'surprise-grid';
+  ideas.forEach((idea, i) => { const button = document.createElement('button'); button.type = 'button'; button.textContent = '✦'; button.setAttribute('aria-label', `Sorpresa ${i + 1}`); button.addEventListener('click', () => {
+    $('surpriseText').textContent = idea;
+    state.games = state.games.filter((game) => !game.startsWith('Sorpresa:'));
+    state.games.push(`Sorpresa: ${idea}`);
+    $('surpriseDialog').showModal();
+  }); wrap.append(button); });
+  const hint = document.createElement('p'); hint.textContent = 'Elige una carta para descubrir tu sorpresa.';
+  const area = document.createElement('div'); area.append(wrap, hint); gameMarkup('Elige una sorpresa', area);
+});
+function closeSurprise() { $('surpriseDialog').close(); }
+$('closeSurprise').addEventListener('click', closeSurprise);
+$('doneSurprise').addEventListener('click', closeSurprise);
+$('surpriseDialog').addEventListener('click', (event) => { if (event.target === $('surpriseDialog')) closeSurprise(); });
+function recordGame(prefix, result) { state.games = state.games.filter((game) => !game.startsWith(prefix)); state.games.push(result); }
+$('tetrisButton').addEventListener('click', () => {
+  const area = document.createElement('div'); gameMarkup('Bloques hasta nivel 10', area);
+  activeGameCleanup = window.MiniGames.mountTetris(area, (level, lines) => recordGame('Bloques:', `Bloques: nivel ${level}, ${lines} filas`));
+});
+$('birdButton').addEventListener('click', () => {
+  const area = document.createElement('div'); gameMarkup('El pajarito', area);
+  activeGameCleanup = window.MiniGames.mountBird(area, (score) => recordGame('Pajarito:', `Pajarito: ${score} obstáculos`));
 });
 $('skipGamesButton').addEventListener('click', () => {
   const summary = $('answerSummary'); summary.replaceChildren();
   for (const [label, value] of [['Comida', state.answers.food], ['Lugar', state.answers.place], ['Momento', state.answers.time], ['Fecha tentativa', state.answers.date]]) {
     if (!value) continue; const line = document.createElement('p'); const bold = document.createElement('strong'); bold.textContent = `${label}: `; line.append(bold, document.createTextNode(value)); summary.append(line);
   }
+  if (state.answers.note) { const note = document.createElement('p'); const bold = document.createElement('strong'); bold.textContent = 'Tu idea: '; note.append(bold, document.createTextNode(state.answers.note)); summary.append(note); }
   show('finalView');
 });
 $('sendButton').addEventListener('click', async () => {
-  const decision = document.querySelector('input[name="decision"]:checked')?.value;
-  if (!decision) { $('sendError').textContent = 'Elige una respuesta antes de enviarla.'; return; }
   $('sendError').textContent = ''; const button = $('sendButton'); busy(button, true);
-  try { await post('/api/submit', { answers: state.answers, games: state.games, decision, message: $('finalMessage').value.trim() }); show('thanksView'); }
+  try { await post('/api/submit', { answers: state.answers, games: state.games, decision: 'Acepto la invitación', message: $('finalMessage').value.trim() }); show('thanksView'); }
   catch (error) { $('sendError').textContent = error.message; }
   finally { busy(button, false); }
 });
