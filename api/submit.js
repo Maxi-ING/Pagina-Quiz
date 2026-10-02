@@ -33,7 +33,7 @@ export default async function handler(req, res) {
   const date = short(answers.date ?? '', 10), note = short(answers.note ?? '', 500), message = short(body.message ?? '', 1000);
   const decision = short(body.decision, 50);
   const validTimes = ['Por la mañana', 'Por la tarde', 'Por la noche'];
-  const games = Array.isArray(body.games) && body.games.length <= 4 ? body.games.map((item) => short(item, 120)) : null;
+  const games = Array.isArray(body.games) && body.games.length <= 6 ? body.games.map((item) => short(item, 120)) : null;
   if (!food || !place || !validTimes.includes(time) || decision !== 'Acepto la invitación' || date === null || !validFutureDate(date) || note === null || message === null || !games || games.some((game) => game === null)) return res.status(400).json({ error: 'Revisa tus respuestas e inténtalo nuevamente.' });
   const lines = [
     `Respuesta de: ${guest.name}`, `Decisión: ${decision}`, '', `Comida: ${food}`, `Lugar: ${place}`, `Momento: ${time}`, `Fecha tentativa: ${date || 'No indicó'}`, `Preferencias adicionales: ${note || 'No indicó'}`, `Juegos: ${games.join('; ') || 'No jugó'}`, `Mensaje final: ${message || 'No indicó'}`
