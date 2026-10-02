@@ -9,7 +9,7 @@ Página personal en HTML, CSS y JavaScript. La portada ofrece el quiz de la cita
 - El juego de memoria ofrece tres dificultades: fácil (3 parejas), medio (6 parejas) y difícil (10 parejas), con intentos y tiempo.
 - Los juegos se abren en un área central ampliada sin login. Desde allí se puede volver al inicio o pasar al login del quiz; los resultados jugados se incluyen en el reporte si se acepta la invitación.
 - Ajusta la velocidad y las reglas de los juegos de bloques y pajarito en `public/games.js`. Bloques llega al nivel 10 y se completa al despejar 40 filas.
-- En `public/extra-games.js` están Atrapa las rosas (45 segundos, dificultad creciente, récord en este navegador) y El paseo de los corazones (cinco niveles, vidas y corazones secretos). Ambos admiten teclado y controles táctiles. El progreso del paseo se reinicia al salir del juego.
+- En `public/extra-games.js` están Atrapa las rosas (45 segundos, dificultad creciente, récord en este navegador) y El paseo de los corazones (cinco niveles, vidas, reintentos del nivel actual y corazones secretos). Ambos admiten teclado y controles táctiles. El progreso del paseo se reinicia al salir del juego.
 - La fecha opcional solo admite desde el día actual; el servidor vuelve a comprobarla en la zona horaria de Lima.
 - Cambia el usuario y el código en `lib/config.js`. Los valores iniciales son `chica` y `123`.
 - También puedes definir `GUEST_NAME` y `ACCESS_CODE` en Vercel; estas variables tienen prioridad sobre el código.
