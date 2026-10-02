@@ -161,6 +161,14 @@ $('birdButton').addEventListener('click', () => {
   const area = document.createElement('div'); gameMarkup('El pajarito', area);
   activeGameCleanup = window.MiniGames.mountBird(area, (score) => recordGame('Pajarito:', `Pajarito: ${score} obstáculos`));
 });
+$('rosesButton').addEventListener('click', () => {
+  const area = document.createElement('div'); gameMarkup('Atrapa las rosas', area);
+  activeGameCleanup = window.MiniGames.mountRoses(area, (score) => recordGame('Rosas:', `Rosas: ${score} puntos`));
+});
+$('platformButton').addEventListener('click', () => {
+  const area = document.createElement('div'); gameMarkup('El paseo de los corazones', area);
+  activeGameCleanup = window.MiniGames.mountPlatform(area, (level, hearts, won) => recordGame('Paseo:', `Paseo: nivel ${level}/5, ${hearts} corazones${won ? ', completado' : ''}`));
+});
 $('sendButton').addEventListener('click', async () => {
   $('sendError').textContent = ''; const button = $('sendButton'); busy(button, true);
   try { await post('/api/submit', { answers: state.answers, games: state.games, decision: 'Acepto la invitación', message: $('finalMessage').value.trim() }); show('thanksView'); }
