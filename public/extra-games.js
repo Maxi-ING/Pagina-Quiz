@@ -201,10 +201,12 @@
       'Juego de plataformas de cinco niveles con corazones ocultos',
       '← → o A/D para moverte; espacio, ↑ o W para saltar. En teléfono mantén los botones. Busca corazones cerca de las flores.');
     const input = { left: false, right: false };
-    let level = 1, lives = 3, total = 0, world = buildWorld(1);
+    let level = 1, lives = 3, total = 0, levelStartHearts = 0, world = buildWorld(1);
     let player = { x: 60, y: GROUND - 36, w: 27, h: 36, vx: 0, vy: 0, grounded: true, coyote: 0, jump: 0, shield: 0 };
     let camera = 0, checkpoint = 60, mode = 'ready', last = 0, frameId, disposed = false;
-    const mainButton = action('Empezar aventura', () => { if (mode === 'clear') next(); else start(); });
+    const mainButton = action('Empezar aventura', () => {
+      if (mode === 'clear') next(); else if (mode === 'over') retry(); else start();
+    });
     buttons.append(
       hold('←', 'Caminar a la izquierda', () => { input.left = true; }, () => { input.left = false; }),
       hold('↑', 'Saltar', () => { player.jump = .16; }, () => {}),
@@ -221,14 +223,19 @@
       input.left = false; input.right = false;
     }
     function start() {
-      level = 1; lives = 3; total = 0; world = buildWorld(level); checkpoint = 60; camera = 0;
+      level = 1; lives = 3; total = 0; levelStartHearts = 0; world = buildWorld(level); checkpoint = 60; camera = 0;
       resetPlayer(); mode = 'playing'; mainButton.textContent = 'Reiniciar aventura'; refresh();
     }
     function next() {
       if (mode !== 'clear') return;
-      level++; lives = Math.min(3, lives + 1); world = buildWorld(level);
+      level++; lives = Math.min(3, lives + 1); levelStartHearts = total; world = buildWorld(level);
       checkpoint = 60; camera = 0; resetPlayer(); mode = 'playing';
       mainButton.textContent = 'Reiniciar aventura'; refresh();
+    }
+    function retry() {
+      total = levelStartHearts; lives = 3; world = buildWorld(level);
+      checkpoint = 60; camera = 0; resetPlayer(); mode = 'playing';
+      mainButton.textContent = 'Reiniciar aventura'; onResult(level, total, false); refresh();
     }
     function keyDown(event) {
       if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', ' ', 'a', 'A', 'd', 'D', 'w', 'W'].includes(event.key)) return;
@@ -245,7 +252,7 @@
       if (player.shield > 0 || mode !== 'playing') return;
       lives--;
       if (lives <= 0) {
-        mode = 'over'; mainButton.textContent = 'Volver a empezar'; onResult(level, total, false);
+        mode = 'over'; mainButton.textContent = 'Reintentar nivel'; onResult(level, total, false);
       } else resetPlayer();
       refresh();
     }
@@ -370,7 +377,7 @@
           mode === 'clear' ? `Te esperan más secretos en el nivel ${level + 1}.` :
           `Llegaste al nivel ${level} con ${total} corazones.`, 360, 199);
         ctx.font = '14px sans-serif';
-        ctx.fillText(mode === 'clear' ? 'Pulsa Siguiente nivel' : 'Usa el botón para comenzar', 360, 236);
+        ctx.fillText(mode === 'clear' ? 'Pulsa Siguiente nivel' : mode === 'over' ? 'Reintenta este nivel' : 'Usa el botón para comenzar', 360, 236);
       }
     }
     function tick(timestamp) {
