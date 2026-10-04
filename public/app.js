@@ -79,7 +79,7 @@ function gameMarkup(title, content) {
 }
 $('memoryButton').addEventListener('click', () => {
   const options = [{ label: 'Fácil', pairs: 3, columns: 3 }, { label: 'Medio', pairs: 6, columns: 4 }, { label: 'Difícil', pairs: 10, columns: 5 }];
-  const symbols = ['🌹', '🍰', '☕', '🎨', '🌿', '💌', '🌙', '🎵', '🍓', '✨'];
+  const symbols = ['🌹', '🍰', '☕', '🎨', '🌿', '🦋', '🌙', '🎵', '🍓', '✨'];
   const area = document.createElement('div');
   const lead = document.createElement('p'); lead.textContent = '¿Cuántas parejas te animas a encontrar?';
   const levels = document.createElement('div'); levels.className = 'memory-levels';
@@ -137,7 +137,7 @@ $('memoryButton').addEventListener('click', () => {
   restart.addEventListener('click', () => { if (selected) start(selected); });
 });
 $('surpriseButton').addEventListener('click', () => {
-  const ideas = ['Un paseo con algo rico para compartir', 'Una tarde de café y buena conversación', 'Elegir juntos un lugar nuevo'];
+  const ideas = ['Pon tu canción favorita y disfruta de una pausa.', 'Busca algo bonito a tu alrededor que hoy haya pasado desapercibido.', 'Prueba otro juego y anímate a superar tu récord.'];
   const wrap = document.createElement('div'); wrap.className = 'surprise-grid';
   ideas.forEach((idea, i) => { const button = document.createElement('button'); button.type = 'button'; button.textContent = '✦'; button.setAttribute('aria-label', `Sorpresa ${i + 1}`); button.addEventListener('click', () => {
     $('surpriseText').textContent = idea;
@@ -166,8 +166,8 @@ $('rosesButton').addEventListener('click', () => {
   activeGameCleanup = window.MiniGames.mountRoses(area, (score) => recordGame('Rosas:', `Rosas: ${score} puntos`));
 });
 $('platformButton').addEventListener('click', () => {
-  const area = document.createElement('div'); gameMarkup('El paseo de los corazones', area);
-  activeGameCleanup = window.MiniGames.mountPlatform(area, (level, hearts, won) => recordGame('Paseo:', `Paseo: nivel ${level}/5, ${hearts} corazones${won ? ', completado' : ''}`));
+  const area = document.createElement('div'); gameMarkup('El paseo de las estrellas', area);
+  activeGameCleanup = window.MiniGames.mountPlatform(area, (level, stars, won) => recordGame('Paseo:', `Paseo: nivel ${level}/5, ${stars} estrellas${won ? ', completado' : ''}`));
 });
 $('sendButton').addEventListener('click', async () => {
   $('sendError').textContent = ''; const button = $('sendButton'); busy(button, true);

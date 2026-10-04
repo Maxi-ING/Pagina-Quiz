@@ -41,12 +41,26 @@
     button.addEventListener('lostpointercapture', onUp);
     return button;
   }
-  function heart(ctx, x, y, size, color = '#d85878') {
-    ctx.save(); ctx.translate(x, y); ctx.scale(size / 22, size / 22);
-    ctx.beginPath(); ctx.moveTo(0, 9);
-    ctx.bezierCurveTo(-25, -7, -9, -17, 0, -7);
-    ctx.bezierCurveTo(9, -17, 25, -7, 0, 9);
+  function star(ctx, x, y, size, color = '#d9a441') {
+    ctx.save(); ctx.translate(x, y); ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const angle = -Math.PI / 2 + i * Math.PI / 5;
+      const radius = size * (i % 2 === 0 ? .5 : .23);
+      const px = Math.cos(angle) * radius, py = Math.sin(angle) * radius;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
     ctx.fillStyle = color; ctx.fill(); ctx.restore();
+  }
+  function rose(ctx, x, y) {
+    ctx.save(); ctx.translate(x, y); ctx.fillStyle = '#cb5372';
+    for (let i = 0; i < 5; i++) {
+      const angle = i * Math.PI * 2 / 5;
+      ctx.beginPath(); ctx.arc(Math.cos(angle) * 6, Math.sin(angle) * 6, 7, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = '#e995a6'; ctx.beginPath(); ctx.arc(0, 0, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#a84160'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(0, 0, 3, 0, Math.PI * 1.6); ctx.stroke(); ctx.restore();
   }
 
   function mountRoses(host, onResult) {
@@ -134,8 +148,7 @@
         } else {
           ctx.fillStyle = '#81aa80'; ctx.fillRect(-2, 4, 4, 16);
           ctx.beginPath(); ctx.ellipse(6, 12, 8, 4, -.5, 0, 7); ctx.fill();
-          heart(ctx, 0, -3, 23, '#cb5372');
-          ctx.fillStyle = '#e995a6'; ctx.beginPath(); ctx.arc(-3, -7, 5, 0, 7); ctx.fill();
+          rose(ctx, 0, -3);
         }
         ctx.restore();
       }
@@ -198,8 +211,8 @@
   }
   function mountPlatform(host, onResult) {
     const { canvas, ctx, stats, buttons } = canvasGame(host, 720, 400,
-      'Juego de plataformas de cinco niveles con corazones ocultos',
-      '← → o A/D para moverte; espacio, ↑ o W para saltar. En teléfono mantén los botones. Busca corazones cerca de las flores.');
+      'Juego de plataformas de cinco niveles con estrellas ocultas',
+      '← → o A/D para moverte; espacio, ↑ o W para saltar. En teléfono mantén los botones. Busca estrellas cerca de las flores.');
     const input = { left: false, right: false };
     let level = 1, lives = 3, total = 0, levelStartHearts = 0, world = buildWorld(1);
     let player = { x: 60, y: GROUND - 36, w: 27, h: 36, vx: 0, vy: 0, grounded: true, coyote: 0, jump: 0, shield: 0 };
@@ -214,7 +227,7 @@
       mainButton
     );
     function refresh() {
-      const line = `Nivel ${level}/5 · ${worlds[level - 1].name} · Vidas ${lives} · Corazones ${total}`;
+      const line = `Nivel ${level}/5 · ${worlds[level - 1].name} · Vidas ${lives} · Estrellas ${total}`;
       if (stats.textContent !== line) stats.textContent = line;
     }
     function resetPlayer() {
@@ -349,11 +362,11 @@
         if (item.taken) continue;
         if (item.hidden && !item.revealed) {
           ctx.fillStyle = '#709b83'; ctx.beginPath(); ctx.ellipse(item.x, item.y + 12, 13, 7, -.4, 0, 7); ctx.fill();
-        } else heart(ctx, item.x, item.y + Math.sin(now / 250 + item.x) * 3, 24, item.hidden ? '#e6a153' : '#d85878');
+        } else star(ctx, item.x, item.y + Math.sin(now / 250 + item.x) * 3, 24, item.hidden ? '#e6a153' : '#d9a441');
       }
       const goal = world.goal;
       ctx.fillStyle = '#775b70'; ctx.fillRect(goal, GROUND - 104, 6, 104);
-      heart(ctx, goal + 21, GROUND - 95, 30, '#e7a369');
+      star(ctx, goal + 21, GROUND - 108, 30, '#e7a369');
       ctx.fillStyle = '#fff7e7'; ctx.fillRect(goal + 5, GROUND - 92, 39, 29);
       ctx.fillStyle = '#946275'; ctx.font = 'bold 13px sans-serif'; ctx.fillText('META', goal + 7, GROUND - 72);
       if (!(player.shield > 0 && Math.floor(now / 100) % 2 === 0)) {
@@ -368,14 +381,14 @@
       if (mode !== 'playing') {
         ctx.fillStyle = '#fff9f1ed'; ctx.fillRect(154, 105, 412, 168);
         ctx.fillStyle = '#684453'; ctx.textAlign = 'center'; ctx.font = 'bold 27px Georgia,serif';
-        const title = mode === 'ready' ? 'Un paseo especial' : mode === 'clear' ? '¡Nivel completado!' :
-          mode === 'won' ? '¡Llegaste a la sorpresa! ♡' : 'Inténtalo otra vez';
+        const title = mode === 'ready' ? 'El paseo de las estrellas' : mode === 'clear' ? '¡Nivel completado!' :
+          mode === 'won' ? '¡Aventura completada! ✦' : 'Inténtalo otra vez';
         ctx.fillText(title, 360, 161);
         ctx.font = '16px sans-serif';
         ctx.fillText(mode === 'ready' ? 'Cinco caminos para explorar' :
-          mode === 'won' ? `Encontraste ${total} corazones. Gracias por jugar.` :
+          mode === 'won' ? `Encontraste ${total} estrellas. Gracias por jugar.` :
           mode === 'clear' ? `Te esperan más secretos en el nivel ${level + 1}.` :
-          `Llegaste al nivel ${level} con ${total} corazones.`, 360, 199);
+          `Llegaste al nivel ${level} con ${total} estrellas.`, 360, 199);
         ctx.font = '14px sans-serif';
         ctx.fillText(mode === 'clear' ? 'Pulsa Siguiente nivel' : mode === 'over' ? 'Reintenta este nivel' : 'Usa el botón para comenzar', 360, 236);
       }

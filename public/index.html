@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8f0e8">
-  <title>Una invitación para ti</title>
+  <title>Un ratito para ti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <body>
   <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
   <main class="shell">
-    <header class="topbar"><span class="brand">✦ UNA INVITACIÓN</span><span id="progressLabel" class="progress-label">Elige tu camino</span></header>
+    <header class="topbar"><span class="brand">✦ UN RATITO AQUÍ</span><span id="progressLabel" class="progress-label">Elige tu camino</span></header>
     <div class="progress" aria-hidden="true"><div id="progressFill"></div></div>
 
     <section id="loginView" class="view" aria-labelledby="loginTitle">
@@ -34,12 +34,13 @@
     </section>
 
     <section id="welcomeView" class="view active" aria-labelledby="welcomeTitle">
-      <p class="eyebrow">QUÉ BUENO VERTE AQUÍ</p><h1 id="welcomeTitle">Una invitación para ti.</h1>
-      <p class="intro">Quisiera invitarte a compartir un momento bonito. Elige si prefieres imaginar nuestra cita o empezar con un juego.</p>
-      <div class="note"><span aria-hidden="true">✦</span><p>No hay respuestas correctas. Elige lo que te haga sentir más cómoda.</p></div>
+      <div class="hero-symbol" aria-hidden="true">✿</div>
+      <p class="eyebrow">QUÉ BUENO VERTE AQUÍ</p><h1 id="welcomeTitle">Un ratito para ti.</h1>
+      <p class="intro">Un pequeño rincón para desconectar, jugar y descubrir alguna sorpresa. Elige por dónde empezar y disfruta a tu ritmo.</p>
+      <div class="note"><span aria-hidden="true">✦</span><p>Sin prisa. A veces, un pequeño descanso hace el día más bonito.</p></div>
       <div class="welcome-actions">
-        <button id="startButton" class="primary" type="button">La cita y el quiz <span aria-hidden="true">→</span></button>
-        <button id="startGamesButton" class="secondary" type="button">Ir a los juegos <span aria-hidden="true">✧</span></button>
+        <button id="startGamesButton" class="primary" type="button">Ir a los juegos <span aria-hidden="true">✧</span></button>
+        <button id="startButton" class="secondary" type="button">Abrir el quiz <span aria-hidden="true">→</span></button>
       </div>
     </section>
 
@@ -66,12 +67,12 @@
       <p class="intro">Elige un juego y disfruta a tu ritmo. Puedes cambiar de juego cuando quieras.</p>
       <div id="gameArea" class="game-area" hidden></div>
       <div class="games-grid"><article class="game-card"><span class="game-icon">✿</span><h2>Encuentra las parejas</h2><p>Elige entre fácil, medio y difícil. Recuerda las cartas y encuentra sus pares.</p><button id="memoryButton" class="secondary">Jugar</button></article>
-      <article class="game-card"><span class="game-icon">✧</span><h2>Elige una sorpresa</h2><p>Escoge una tarjeta y descubre una idea para nuestra cita.</p><button id="surpriseButton" class="secondary">Descubrir</button></article>
+      <article class="game-card"><span class="game-icon">✧</span><h2>Elige una sorpresa</h2><p>Escoge una tarjeta y descubre un pequeño reto para alegrar el día.</p><button id="surpriseButton" class="secondary">Descubrir</button></article>
       <article class="game-card"><span class="game-icon">▦</span><h2>Bloques hasta nivel 10</h2><p>Encaja piezas, completa filas y supera los diez niveles.</p><button id="tetrisButton" class="secondary">Jugar</button></article>
       <article class="game-card"><span class="game-icon">🐦</span><h2>El pajarito</h2><p>Vuela entre obstáculos con un toque o la barra espaciadora.</p><button id="birdButton" class="secondary">Volar</button></article>
       <article class="game-card"><span class="game-icon">🌹</span><h2>Atrapa las rosas</h2><p>Recoge rosas, esquiva espinas y supera tu récord en 45 segundos.</p><button id="rosesButton" class="secondary" type="button">Jugar</button></article>
-      <article class="game-card"><span class="game-icon">♡</span><h2>El paseo de los corazones</h2><p>Cinco niveles de saltos, secretos y pequeños retos hasta la meta.</p><button id="platformButton" class="secondary" type="button">Explorar</button></article></div>
-      <div class="games-navigation"><button id="gamesHomeButton" class="text-button" type="button">← Volver al inicio</button><button id="gamesToQuizButton" class="text-button" type="button">Ir al quiz de la cita →</button></div>
+      <article class="game-card"><span class="game-icon">☆</span><h2>El paseo de las estrellas</h2><p>Cinco niveles de saltos, estrellas secretas y pequeños retos hasta la meta.</p><button id="platformButton" class="secondary" type="button">Explorar</button></article></div>
+      <div class="games-navigation"><button id="gamesHomeButton" class="text-button" type="button">← Volver al inicio</button><button id="gamesToQuizButton" class="text-button" type="button">Abrir el quiz →</button></div>
     </section>
 
     <section id="finalView" class="view" aria-labelledby="finalTitle">
@@ -84,8 +85,8 @@
     </section>
 
     <section id="thanksView" class="view" aria-labelledby="thanksTitle"><div class="hero-symbol" aria-hidden="true">✿</div><p class="eyebrow">INVITACIÓN ACEPTADA</p><h1 id="thanksTitle">Entonces, tenemos una cita.</h1><p class="intro">Recibí tu respuesta. Me hace ilusión compartir ese momento contigo.</p></section>
-    <footer>Hecho con cariño <span aria-hidden="true">✦</span></footer>
+    <footer>Los pequeños detalles cuentan <span aria-hidden="true">✦</span></footer>
   </main>
-  <dialog id="surpriseDialog" class="surprise-modal" aria-labelledby="surpriseTitle"><button id="closeSurprise" type="button" class="modal-close" aria-label="Cerrar sorpresa">×</button><p class="eyebrow">UNA IDEA PARA LOS DOS</p><div class="reveal-card" aria-hidden="true"><span>✦</span></div><h2 id="surpriseTitle">Tu sorpresa</h2><p id="surpriseText"></p><button id="doneSurprise" class="secondary" type="button">Me gusta</button></dialog>
+  <dialog id="surpriseDialog" class="surprise-modal" aria-labelledby="surpriseTitle"><button id="closeSurprise" type="button" class="modal-close" aria-label="Cerrar sorpresa">×</button><p class="eyebrow">UN PEQUEÑO RETO PARA HOY</p><div class="reveal-card" aria-hidden="true"><span>✦</span></div><h2 id="surpriseTitle">Tu sorpresa</h2><p id="surpriseText"></p><button id="doneSurprise" class="secondary" type="button">Me gusta</button></dialog>
 </body>
 </html>
